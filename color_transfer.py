@@ -100,6 +100,7 @@ parser = argparse.ArgumentParser(description='Neural style transfer color preser
 parser.add_argument('content_image', type=str, help='Path to content image')
 parser.add_argument('generated_image', type=str, help='Path to generated image')
 parser.add_argument('--mask', default=None, type=str, help='Path to mask image')
+parser.add_argument('--save_path', default=None, type=str, help='Path to save image')
 parser.add_argument('--hist_match', type=int, default=0, help='Perform histogram matching for color matching')
 
 args = parser.parse_args()
@@ -112,6 +113,9 @@ else:
     mode = "YCbCr"
 
 image_path = os.path.splitext(args.generated_image)[0] + image_suffix
+if args.save_path[-1]!='/':
+    args.save_path += '/'
+image_path = args.save_path + args.generated_image.split('/')[-1]
 
 generated_image = imread(args.generated_image, mode="RGB")
 img_width, img_height, _ = generated_image.shape
